@@ -3,6 +3,7 @@ import { TokenCache } from '@clerk/clerk-expo/dist/cache/types';
 import { Slot } from 'expo-router';
 import 'react-native-reanimated';
 import * as SecureStore from 'expo-secure-store';
+import { StatusBar } from 'expo-status-bar';
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
@@ -42,6 +43,7 @@ export default function RootLayout() {
       tokenCache={createTokenCache()}
     >
       <ClerkLoaded>
+        <StatusBar style="dark" />
         <Slot />
       </ClerkLoaded>
     </ClerkProvider>
