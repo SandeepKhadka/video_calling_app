@@ -6,6 +6,7 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  Alert,
 } from 'react-native';
 import { useSignUp } from '@clerk/clerk-expo';
 import { Link, useRouter } from 'expo-router';
@@ -40,10 +41,10 @@ export default function SignUpScreen() {
       // Set 'pendingVerification' to true to display second form
       // and capture OTP code
       setPendingVerification(true);
-    } catch (err) {
+    } catch (err: any) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
-      console.error(JSON.stringify(err, null, 2));
+      Alert.alert('Error', err.errors[0].message);
     }
   };
 
@@ -67,16 +68,19 @@ export default function SignUpScreen() {
         // complete further steps.
         console.error(JSON.stringify(signUpAttempt, null, 2));
       }
-    } catch (err) {
+    } catch (err: any) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
-      console.error(JSON.stringify(err, null, 2));
+      Alert.alert(
+        'Error',
+        "Looks like the code you've entered the wrong code. Please try again."
+      );
     }
   };
 
   if (pendingVerification) {
     return (
-      <View style={{ gap: 10, padding: 10 }}>
+      <View style={[styles.container, { gap: 10, padding: 10 }]}>
         <Text>Verify your email</Text>
         <TextInput
           value={code}

@@ -7,10 +7,12 @@ import {
   View,
   StyleSheet,
   KeyboardAvoidingView,
+  Alert,
 } from 'react-native';
 import { useCallback, useState } from 'react';
 import StyledButton from '@/components/StyledButton';
 import { MaterialIcons } from '@expo/vector-icons';
+import SignInWithGoogle from '@/components/SignInWithGoogle';
 
 export default function SignInScreen() {
   const { signIn, setActive, isLoaded } = useSignIn();
@@ -38,12 +40,12 @@ export default function SignInScreen() {
       } else {
         // If the status isn't complete, check why. User might need to
         // complete further steps.
-        console.error(JSON.stringify(signInAttempt, null, 2));
+        Alert.alert('Error', JSON.stringify(signInAttempt, null, 2));
       }
-    } catch (err) {
+    } catch (err: any) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
-      console.error(JSON.stringify(err, null, 2));
+      Alert.alert('Error', err.errors[0].message);
     }
   }, [isLoaded, emailAddress, password]);
 
@@ -82,11 +84,7 @@ export default function SignInScreen() {
         Forgot your password?
       </Text>
       <Text style={{ color: 'white', marginBottom: 10 }}>OR</Text>
-      <StyledButton
-        title="Sign in with Google"
-        onPress={onSignInPress}
-        color="#5f5dec"
-      />
+      <SignInWithGoogle />
       <View
         style={{
           margin: 20,
