@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import * as WebBrowser from 'expo-web-browser';
 import { useSSO } from '@clerk/clerk-expo';
-import { View, Button } from 'react-native';
+import { View, Button, Alert } from 'react-native';
 import StyledButton from './StyledButton';
 
 export const useWarmUpBrowser = () => {
@@ -34,6 +34,7 @@ export default function SignInWithGoogle() {
         });
 
       // If sign in was successful, set the active session
+      Alert.alert('Success', 'Session created');
       if (createdSessionId) {
         setActive!({ session: createdSessionId });
       } else {
@@ -41,11 +42,13 @@ export default function SignInWithGoogle() {
         // there are missing requirements, such as MFA
         // Use the `signIn` or `signUp` returned from `startSSOFlow`
         // to handle next steps
+        Alert.alert('Error', 'Session not created');
       }
     } catch (err) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
       console.error(JSON.stringify(err, null, 2));
+      Alert.alert('Error', 'Session not created');
     }
   }, []);
 
