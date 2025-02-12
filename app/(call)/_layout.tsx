@@ -34,27 +34,38 @@ const CallLayout = () => {
 
   const tokenProvider = async () => {
     try {
-      const response = await fetch(
-        `${process.env.EXPO_PUBLIC_API_URL}/generateUserToken`,
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            userId: clerkUser.id,
-            name: clerkUser.fullName!,
-            image: clerkUser.imageUrl!,
-            email: clerkUser.primaryEmailAddress?.toString()!,
-          }),
-        }
-      );
+      const url = `${process.env.EXPO_PUBLIC_API_URL}/generateUserToken`;
+      console.log('Fetching from:', url);
+
+      const bodyData = {
+        userId: clerkUser.id,
+        name: clerkUser.fullName || 'Unknown',
+        image: clerkUser.imageUrl || '',
+        email: clerkUser.primaryEmailAddress?.toString() || '',
+      };
+
+      console.log('Request Body:', bodyData);
+
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bodyData),
+      });
+
+      console.log('Response status:', response);
+
+      if (!response.ok) {
+        throw new Error(`HTTP Error! Status: ${response.status}`);
+      }
 
       const { token } = await response.json();
+      console.log('Token:', token);
 
       return token;
-    } catch (e) {
-      console.log(e);
+    } catch (error) {
+      console.error('Fetch error:', error);
     }
   };
 
