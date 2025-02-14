@@ -1,16 +1,49 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import React from 'react';
 import { CallContent } from '@stream-io/video-react-native-sdk';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { useRouter } from 'expo-router';
 
 const CallRoom = ({ slug }: { slug: string }) => {
+  const router = useRouter();
   return (
-    <GestureHandlerRootView>
-      <CallContent />
-    </GestureHandlerRootView>
+    <View>
+      <View
+        style={{
+          position: 'absolute',
+          top: 10,
+          left: 10,
+          zIndex: 100,
+        }}
+      >
+        <RoomId slug={slug} />
+      </View>
+      <GestureHandlerRootView style={{ flex: 1 }}>
+        <CallContent onHangupCallHandler={() => router.back()} />
+      </GestureHandlerRootView>
+    </View>
   );
 };
 
 export default CallRoom;
 
-const styles = StyleSheet.create({});
+const RoomId = ({ slug }: { slug: string | null }) => {
+  return (
+    <TouchableOpacity
+      onPress={() => copySlug(slug)}
+      style={{
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        padding: 10,
+        borderRadius: 5,
+      }}
+    >
+      <Text
+        style={{
+          color: 'white',
+        }}
+      >
+        Call ID : {formatSlug(slug)}
+      </Text>
+    </TouchableOpacity>
+  );
+};
