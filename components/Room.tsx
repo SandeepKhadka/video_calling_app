@@ -3,6 +3,7 @@ import React from 'react';
 import { CallContent } from '@stream-io/video-react-native-sdk';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useRouter } from 'expo-router';
+import { copySlug, formatSlug } from '@/lib/slugs';
 
 const CallRoom = ({ slug }: { slug: string }) => {
   const router = useRouter();
