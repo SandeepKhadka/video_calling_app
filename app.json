@@ -15,7 +15,11 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bitcode": false
+      "bitcode": false,
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses camera to take photos and videos for live calls",
+        "NSMicrophoneUsageDescription": "This app uses microphone to record audio for live calls"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -63,10 +67,7 @@
       [
         "react-native-permissions",
         {
-          "iosPermissions": [
-            "Camera",
-            "Microphone"
-          ]
+          "iosPermissions": ["Camera", "Microphone"]
         }
       ]
     ],

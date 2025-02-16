@@ -8,6 +8,9 @@ import {
 } from '@stream-io/video-react-native-sdk';
 import { useLocalSearchParams } from 'expo-router';
 import Room from '@/components/Room';
+import { generateSlug } from 'random-word-slugs';
+import Toast from 'react-native-root-toast';
+import { copySlug } from '@/lib/slugs';
 
 const CallScreen = () => {
   const { id } = useLocalSearchParams();
@@ -26,9 +29,25 @@ const CallScreen = () => {
       });
     } else {
       // creating a new call
-      slug = 'demoroom';
+      slug = generateSlug(3, {
+        categories: {
+          adjective: ['color', 'personality'],
+          noun: ['animals', 'food'],
+        },
+      });
       const _call = client?.call('default', slug);
       _call?.join({ create: true }).then(() => {
+        Toast.show(
+          'Call Created Successfully \n Tap here to COPY the call ID to share!',
+          {
+            duration: Toast.durations.LONG,
+            position: Toast.positions.CENTER,
+            shadow: true,
+            onPress: async () => {
+              copySlug(slug);
+            },
+          }
+        );
         setCall(_call);
       });
     }

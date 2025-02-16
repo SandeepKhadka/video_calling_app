@@ -1,11 +1,16 @@
-import { SignedIn, SignedOut, useAuth } from '@clerk/clerk-expo';
+import { SignedIn, SignedOut, useAuth, useUser } from '@clerk/clerk-expo';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Dialog from 'react-native-dialog';
 import { useState } from 'react';
+import { Call, useStreamVideoClient } from '@stream-io/video-react-native-sdk';
 
 export default function Index() {
+  const client = useStreamVideoClient();
+  const { user } = useUser();
+  const router = userR;
+  const [calls, setCalls] = useState<Call[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const { signOut } = useAuth();
 
