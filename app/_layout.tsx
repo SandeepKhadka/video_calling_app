@@ -4,6 +4,7 @@ import { Slot } from 'expo-router';
 import 'react-native-reanimated';
 import * as SecureStore from 'expo-secure-store';
 import { StatusBar } from 'expo-status-bar';
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
@@ -43,8 +44,10 @@ export default function RootLayout() {
       tokenCache={createTokenCache()}
     >
       <ClerkLoaded>
-        <StatusBar style="dark" />
-        <Slot />
+        <RootSiblingParent>
+          <StatusBar style="dark" />
+          <Slot />
+        </RootSiblingParent>
       </ClerkLoaded>
     </ClerkProvider>
   );
