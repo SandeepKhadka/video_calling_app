@@ -56,16 +56,7 @@ export default function JoinPage() {
           alignItems: 'center',
           justifyContent: 'center',
         }}
-      >
-        <Text
-          style={{
-            color: 'white',
-            fontWeight: 'bold',
-          }}
-        >
-          Join Room
-        </Text>
-      </TouchableOpacity>
+      ></TouchableOpacity>
     </View>
   );
 }
