@@ -5,11 +5,12 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Dialog from 'react-native-dialog';
 import { useState } from 'react';
 import { Call, useStreamVideoClient } from '@stream-io/video-react-native-sdk';
+import { useRouter } from 'expo-router';
 
 export default function Index() {
   const client = useStreamVideoClient();
   const { user } = useUser();
-  const router = userR;
+  const router = useRouter();
   const [calls, setCalls] = useState<Call[]>([]);
   const [dialogOpen, setDialogOpen] = useState(false);
   const { signOut } = useAuth();
